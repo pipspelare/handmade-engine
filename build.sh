@@ -24,7 +24,7 @@ if [ $XDG_SESSION_TYPE != "x11" ]; then
 	#    pacman -Q xorg-xwayland >/dev/null 2>&1 && echo "✅ XWayland (Arch)"
 	fi
 
-gcc -Wall -g src/main.cpp -lX11 -lm -o build/engine
+gcc -Wall -O3 -g src/main.cpp -lX11 -lm -o build/engine
 
 if [ $? == 0 ]; then
 	./build/engine

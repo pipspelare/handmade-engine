@@ -138,8 +138,8 @@ internal void render(app_state *app, int XOffSet) {
 		{-1,  1,  1}
 	};
 
-	float cos_Offset = cos(XOffSet * 0.111);
-	float sin_Offset = sin(XOffSet * 0.111);
+	float cos_Offset = cos(XOffSet * 0.001);
+	float sin_Offset = sin(XOffSet * 0.001);
 
 
 	for (int i = 0; i < 8; ++i) {
@@ -163,12 +163,12 @@ internal void render(app_state *app, int XOffSet) {
 		int a = edges[i].a;
 		int b = edges[i].b;
 
-		int x1 = ((v[a].x / v[a].z) * 420.0 + app->width * 0.5);
-		int y1 = ((-v[a].y / v[a].z) * 420.0 + app->height * 0.5);
-		int x2 = ((v[b].x / v[b].z) * 420.0 + app->width * 0.5);
-		int y2 = ((-v[b].y / v[b].z) * 420.0 + app->height * 0.5);
+		int x1 = ((v[a].x / v[a].z) * 470.0 + app->width * 0.5);
+		int y1 = ((-v[a].y / v[a].z) * 470.0 + app->height * 0.5);
+		int x2 = ((v[b].x / v[b].z) * 470.0 + app->width * 0.5);
+		int y2 = ((-v[b].y / v[b].z) * 470.0 + app->height * 0.5);
 
-		draw_line(app, x1, y1, x2, y2, 50, 150, 200);
+		draw_line(app, x1, y1, x2, y2, 150, 200, 250);
 
 	}
 
@@ -178,7 +178,7 @@ internal void render(app_state *app, int XOffSet) {
 
 int main() {
 
-	app_state app = {0};
+	app_state app = {};
 	app.display = XOpenDisplay(NULL);
 
 	if (!app.display) {
