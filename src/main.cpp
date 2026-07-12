@@ -92,17 +92,19 @@ internal void draw_line(app_state *app, int x0, int y0, int x1, int y1, int r, i
 }
 
 
-internal int create_image(app_state *app, int width, int height) {
+internal int create_image(app_state *app, int width, int height) { // TODO:: add error handling in case image
+								   // will not be a able to be created in initial call
 
-	int bytes_per_line = width * 4;
-	int allocation_size = height * bytes_per_line; 
+	int bytes_per_line_computed = width * bytes_per_pixel;
+	int allocation_size = height * bytes_per_line_computed; 
+
 	app->pixels = (uint8*)malloc(allocation_size);
 	app->width = width;
 	app->height = height;
 	
 	app->image = XCreateImage(app->display, app->visual, app->depth, 
 	    		     ZPixmap, 0, (char*)app->pixels, 
-	   		     width, height, 32, bytes_per_line);
+	   		     width, height, 32, bytes_per_line_computed);
 	return 1;
 }
 
@@ -214,7 +216,9 @@ int main() {
 	XSetNormalHints(app.display, app.window, sizeHints);
 	XFree(sizeHints);
 
-	if (!create_image(&app, 800, 600)) {
+	if (!create_image(&app, SCREEN_WIDTH, SCREEN_HEIGHT)) { // initial call with max screen resolution allocates a
+								// chunk big enough to eliminate mmap and munmap 
+								// syscalls on resize with only brk left
 		fprintf(stderr, "\nFailed to create initial image\n");
 		goto cleanup;
 	}
