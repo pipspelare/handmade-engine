@@ -102,12 +102,7 @@ internal int create_image(app_state *app, int width, int height) {
 	
 	app->image = XCreateImage(app->display, app->visual, app->depth, 
 	    		     ZPixmap, 0, (char*)app->pixels, 
-	    		     width, height, 32, bytes_per_line);
-	//if (!app->image) {
-	    //free(app->pixels);
-	    //return 0;
-	//}
-	//Don't think this check is needed
+	   		     width, height, 32, bytes_per_line);
 	return 1;
 }
 
@@ -242,6 +237,7 @@ int main() {
 					int current_height = event.xconfigure.height;
 			    
 					if (current_width != app.width || current_height != app.height) {
+						free(app.pixels);
 						if (create_image(&app, current_width, current_height)) {
 							XSync(app.display, False);
 						}
